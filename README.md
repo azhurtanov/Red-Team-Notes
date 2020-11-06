@@ -9,26 +9,26 @@ This repo is a collection of notes rather than reference to chain an attack.
 - 1.1 Scripts<br>
 - 1.2 SCManager<br>
 [2. Lateral Movement](#2-lateral-movement)<br>
-- 2.1 Explicit Creds
-- 2.2 Add hosts to trusted sources
-- 2.3 "Overpass the hash"
+- 2.1 Explicit Creds<br>
+- 2.2 Add hosts to trusted sources<br>
+- 2.3 "Overpass the hash"<br>
 [3. Defense Evasion](#3-defense-evasion)<br>
-- 3.1 AMSI Bypass
-- 3.2 Disable Local Firewall
-- 3.3 Bypass UAC (fodhelper.exe)
-- 3.4 Bypass UAC (cmstp.exe)
-- 3.5 Bypass CLM
+- 3.1 AMSI Bypass<br>
+- 3.2 Disable Local Firewall<br>
+- 3.3 Bypass UAC (fodhelper.exe)<br>
+- 3.4 Bypass UAC (cmstp.exe)<br>
+- 3.5 Bypass CLM<br>
 [4. Persistence](#2-persistence)<br>
-- 4.1 Local Persistence: Scheduled Tasks
-- 4.2 Domain Persistence: Silver Ticket
-- 4.3 Domain Persistence: Golden Ticket
-- 4.4 Domain Persistence: Skeleton Key
-- 4.5 Domain Persistence: DSRM
-- 4.6 Domain Persistence: Custom SSP
+- 4.1 Local Persistence: Scheduled Tasks<br>
+- 4.2 Domain Persistence: Silver Ticket<br>
+- 4.3 Domain Persistence: Golden Ticket<br>
+- 4.4 Domain Persistence: Skeleton Key<br>
+- 4.5 Domain Persistence: DSRM<br>
+- 4.6 Domain Persistence: Custom SSP<br>
 [5. Privilege Escalation](#2-privilege-escalation)<br>
-- 5.1 Constrained Delegation
-- 5.2 LAPS Passwords
-- 5.3 Resource-Based Constraint Delegation
+- 5.1 Constrained Delegation<br>
+- 5.2 LAPS Passwords<br>
+- 5.3 Resource-Based Constraint Delegation<br>
 [6. Miscellaneous Commands](#2-miscellaneous-commands)<br>
 
 # 1 Local Privilege Escalation
