@@ -1,8 +1,8 @@
 # Red-Team-Notes
-This repository contains notes for execution of attack scenarios in AD environments.<br>
+This repository contains notes for execution of attack scenarios in AD environments and some other useful commands.<br>
 AD module can be found at [Microsoft](https://docs.microsoft.com/en-us/powershell/module/addsadministration/?view=win10-ps) or at [Nikhil's repo](https://github.com/samratashok/ADModule)
 
-This repo is a collection of notes rather than reference to chain an attack.
+This repo is a collection of notes and commands that I keep on forgetting rather than reference to chain an attack.
 # Contents
 
 [1. Local Privilege Escalation](#1-local-privilege-escalation)<br>
@@ -18,18 +18,18 @@ This repo is a collection of notes rather than reference to chain an attack.
 - 3.3 Bypass UAC (fodhelper.exe)<br>
 - 3.4 Bypass UAC (cmstp.exe)<br>
 - 3.5 Bypass CLM<br>
-[4. Persistence](#2-persistence)<br>
+[4. Persistence](#4-persistence)<br>
 - 4.1 Local Persistence: Scheduled Tasks<br>
 - 4.2 Domain Persistence: Silver Ticket<br>
 - 4.3 Domain Persistence: Golden Ticket<br>
 - 4.4 Domain Persistence: Skeleton Key<br>
 - 4.5 Domain Persistence: DSRM<br>
 - 4.6 Domain Persistence: Custom SSP<br>
-[5. Privilege Escalation](#2-privilege-escalation)<br>
+[5. Privilege Escalation](#5-privilege-escalation)<br>
 - 5.1 Constrained Delegation<br>
 - 5.2 LAPS Passwords<br>
 - 5.3 Resource-Based Constraint Delegation<br>
-[6. Miscellaneous Commands](#2-miscellaneous-commands)<br>
+[6. Miscellaneous Commands](#6-miscellaneous-commands)<br>
 
 # 1 Local Privilege Escalation
 1.1 Scripts:
