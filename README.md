@@ -9,6 +9,7 @@ This repo is a collection of notes and commands that I keep on forgetting rather
 
 - 1.1 Scripts<br>
 - 1.2 SCManager<br>
+
 [2. Lateral Movement](#2-lateral-movement)
 
 - 2.1 Explicit Creds<br>
@@ -20,19 +21,24 @@ This repo is a collection of notes and commands that I keep on forgetting rather
 - 3.2 Disable Local Firewall<br>
 - 3.3 Bypass UAC (fodhelper.exe)<br>
 - 3.4 Bypass UAC (cmstp.exe)<br>
-- 3.5 Bypass CLM<br>
-[4. Persistence](#4-persistence)<br>
+- 3.5 Bypass CLM
+
+[4. Persistence](#4-persistence)
+
 - 4.1 Local Persistence: Scheduled Tasks<br>
 - 4.2 Domain Persistence: Silver Ticket<br>
 - 4.3 Domain Persistence: Golden Ticket<br>
 - 4.4 Domain Persistence: Skeleton Key<br>
 - 4.5 Domain Persistence: DSRM<br>
-- 4.6 Domain Persistence: Custom SSP<br>
-[5. Privilege Escalation](#5-privilege-escalation)<br>
+- 4.6 Domain Persistence: Custom SSP
+
+[5. Privilege Escalation](#5-privilege-escalation)
+
 - 5.1 Constrained Delegation<br>
 - 5.2 LAPS Passwords<br>
-- 5.3 Resource-Based Constraint Delegation<br>
-[6. Miscellaneous Commands](#6-miscellaneous-commands)<br>
+- 5.3 Resource-Based Constraint Delegation
+
+[6. Miscellaneous Commands](#6-miscellaneous-commands)
 
 # 1 Local Privilege Escalation
 1.1 Scripts:
