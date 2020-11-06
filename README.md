@@ -14,7 +14,8 @@ This repo is a collection of notes and commands that I keep on forgetting rather
 
 - 2.1 Explicit Creds<br>
 - 2.2 Add hosts to trusted sources<br>
-- 2.3 "Overpass the hash"<br>
+- 2.3 "Overpass the hash"
+
 [3. Defense Evasion](#3-defense-evasion)
 
 - 3.1 AMSI Bypass<br>
