@@ -5,14 +5,17 @@ AD module can be found at [Microsoft](https://docs.microsoft.com/en-us/powershel
 This repo is a collection of notes and commands that I keep on forgetting rather than reference to chain an attack.
 # Contents
 
-[1. Local Privilege Escalation](#1-local-privilege-escalation)<br>
+[1. Local Privilege Escalation](#1-local-privilege-escalation)
+
 - 1.1 Scripts<br>
 - 1.2 SCManager<br>
-[2. Lateral Movement](#2-lateral-movement)<br>
+[2. Lateral Movement](#2-lateral-movement)
+
 - 2.1 Explicit Creds<br>
 - 2.2 Add hosts to trusted sources<br>
 - 2.3 "Overpass the hash"<br>
-[3. Defense Evasion](#3-defense-evasion)<br>
+[3. Defense Evasion](#3-defense-evasion)
+
 - 3.1 AMSI Bypass<br>
 - 3.2 Disable Local Firewall<br>
 - 3.3 Bypass UAC (fodhelper.exe)<br>
